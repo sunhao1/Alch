@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8"/>
+	<title>canvas</title>
+</head>
+<body>
+<canvas width="500" height="500" id="canvas" onmousemove="mousover(event)"></canvas>
+<div id="ds"></div>
+<input type="button" onclick="inset = setInterval(yuandong,5)" value="开始"/>
+<input type="button" value="暂停" onclick="clearInterval(inset);" />
+<script type="text/javascript">
+	function mousover(n) {
+		// body...
+		x=n.clientX;
+		y=n.clientY;
+		document.getElementById("ds").innerHTML="x 轴："+x +","+"y 轴"+y;
+	}
+	var c = document.getElementById("canvas");
+	var can = c.getContext("2d");
+	// can.fillStyle="#FF0000";
+	// can.fillRect(0,0,300,300);
+	// can.fillStyle="rgba(0,0,255,0.5)";
+	// can.fillRect(200,200,500,500);
+	// can.moveTo(10,10);
+	// can.lineTo(150,50);
+	// can.lineTo(50,50);
+	// can.stroke();
+	var dir = 0;
+	var width = 500;
+	var height = 500;
+	var erp = 2;
+	var left = 19;
+	function yuandong(){
+	can.clearRect(0,0,width,height);
+	can.fillStyle="blue";
+	can.beginPath();
+	can.arc(left,dir,20,0,Math.PI*2,true);
+	can.closePath();
+	can.fill();
+
+	dir = dir + erp
+	left = left + erp
+	if (dir ==0 || dir == height ) {
+		erp  = erp*-1;
+		
+	}
+	}
+
+</script>
+</body>
+</html>
