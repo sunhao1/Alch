@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+	<title></title>
+	<style type="text/css">
+		.touchdiv{
+			height: 2000px;
+			background-color: #ccc;
+		}
+	</style>
+</head>
+<body>
+	<div class="touchdiv">safsa</div>
+	<script type="text/javascript">
+function makeTouchableButton(ele) {
+		if (!ele) {
+			console.error("makeTouchableButton 无效的元素！");
+			return false;
+		}
+		
+		
+
+		ele.addEventListener("touchstart", function(evt){
+			this.setAttribute("data-moved", "n");
+			var p = evt.touches[0];
+			this.setAttribute("data-touch-start-clientx", p.clientX);
+			this.setAttribute("data-touch-start-clienty", p.clientY);
+			
+		});
+
+		ele.addEventListener("touchmove", function(evt){
+			if (this.getAttribute("data-moved") == "y") return false;
+
+			var p = evt.touches[0];
+			var startClientX = parseInt(this.getAttribute("data-touch-start-clientx"), 10);
+			var startClientY = parseInt(this.getAttribute("data-touch-start-clienty"), 10);
+			var deltax = p.clientX - startClientX;
+            var deltay = p.clientY - startClientY;
+            if (Math.abs(deltax) > 10 || Math.abs(deltay) > 10) {
+            	this.setAttribute("data-moved", "y");
+            }
+		});
+
+		ele.addEventListener("touchend", function(evt) {
+			
+			if (this.getAttribute("data-moved") == "y") {
+				evt.stopImmediatePropagation();
+				return false;
+			}
+		});
+
+	}
+
+	var divs = document.querySelector(".touchdiv");
+	makeTouchableButton(divs);
+	divs.addEventListener("touchend",function(){
+		console.log("您点击我啦。");
+	});
+	</script>
+</body>
+</html>
